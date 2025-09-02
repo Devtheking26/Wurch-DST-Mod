@@ -1,4 +1,5 @@
 local MakePlayerCharacter = require "prefabs/player_common"
+local DietFilter = require("components/dietfilter")
 local Traits = require("traits/traits")
 
 local assets = {
@@ -6,9 +7,9 @@ local assets = {
 }
 
 -- Your character's stats
-TUNING.wurch_HEALTH = 90
-TUNING.wurch_HUNGER = 110
-TUNING.wurch_SANITY = 200
+TUNING.wurch_HEALTH = 128
+TUNING.wurch_HUNGER = 80
+TUNING.wurch_SANITY = 125
 
 -- Custom starting inventory
 TUNING.GAMEMODE_STARTING_ITEMS.DEFAULT.wurch = {
@@ -68,13 +69,22 @@ local master_postinit = function(inst)
 	inst.components.hunger:SetMax(TUNING.wurch_HUNGER)
 	inst.components.sanity:SetMax(TUNING.wurch_SANITY)
 
-  --Add all components
+    --Add all components
+    inst:AddComponent("equippable")
+
+    --Add Diet
+    inst:AddComponent("dietfilter")
+    inst.components.dietfilter:Apply()
 
     --add traits
-    Traits.photosyntheticRegen(inst)
-    Traits.temperatureResistant(inst)
+    Traits.photosyntheticRegen(inst) --Good To go
+    Traits.temperatureResistant(inst) -- Probs working
     Traits.seasonalStats(inst) --Probs Working
     Traits.birchkinAlly(inst)--testing
+    Traits.timberGuilt(inst)--good
+    Traits.sanityImmunities(inst)--Should just work (lowkey)
+    Traits.sanityOnPlant(inst)--Good to go
+    Traits.naturesHarmony(inst)
 
 	inst.OnLoad = onload
     inst.OnNewSpawn = onload

@@ -1,7 +1,6 @@
 PrefabFiles = {
     "wurch",
     "wurch_none",
-    "wurchminion",
 }
 
 Assets = {
@@ -36,7 +35,6 @@ Assets = {
     Asset( "ATLAS", "images/names_gold_wurch.xml" ),
 }
 
-AddMinimapAtlas("images/map_icons/wurch.xml")
 
 local require = GLOBAL.require
 local STRINGS = GLOBAL.STRINGS
@@ -44,8 +42,8 @@ local STRINGS = GLOBAL.STRINGS
 -- The character select screen lines
 STRINGS.CHARACTER_TITLES.wurch = "The Birch Wonder"
 STRINGS.CHARACTER_NAMES.wurch = "wurch"
-STRINGS.CHARACTER_DESCRIPTIONS.wurch = "*Eats the Sun\n*Tough on weather\n*Hidden birch powers"
-STRINGS.CHARACTER_QUOTES.wurch = "\"Quote\""
+STRINGS.CHARACTER_DESCRIPTIONS.wurch = "*Eats the Sun\n*Tough on weather\n*Hates Uncontrolled Fire"
+STRINGS.CHARACTER_QUOTES.wurch = "\"A real TrEEat\""
 STRINGS.CHARACTER_SURVIVABILITY.wurch = "Slim"
 
 -- Custom speech strings
@@ -66,31 +64,6 @@ local skin_modes = {
     },
 }
 
+AddMinimapAtlas("images/map_icons/wurch.xml")
 -- Add mod character to mod character list
 AddModCharacter("wurch", "MALE", skin_modes)
-
--------------------------------------------------
--- 🌱 Wurch Minion Spawn Helper
--------------------------------------------------
-local function SpawnWurchMinion(leader)
-    if leader == nil or not leader:IsValid() then
-        return
-    end
-
-    local minion = GLOBAL.SpawnPrefab("wurchminion")
-    if minion ~= nil then
-        minion.Transform:SetPosition(leader.Transform:GetWorldPosition())
-        if minion.components.follower ~= nil then
-            minion.components.follower:SetLeader(leader)
-        end
-    end
-    return minion
-end
-
--- Console-friendly global command
-GLOBAL.SpawnWurchMinion = function()
-    local player = GLOBAL.ThePlayer
-    if player ~= nil then
-        return SpawnWurchMinion(player)
-    end
-end
